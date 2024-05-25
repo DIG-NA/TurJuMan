@@ -443,6 +443,8 @@ Widget icon(double size, IconData icon, String s) {
   );
 }
 
+// the streets are a mess
+
 // Widget secondscreen(String s) {
 //   return Scaffold(
 //     appBar: AppBar(
