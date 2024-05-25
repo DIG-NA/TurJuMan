@@ -44,14 +44,14 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      debugShowCheckedModeBanner: true,
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         // appBar: AppBar(
         //   forceMaterialTransparency: true,
         //   // -8
         //   toolbarHeight: 2,
         // ),
-        backgroundColor: Color.fromARGB(255, 255, 255, 255),
+        backgroundColor: Color.fromARGB(255, 245, 255, 186),
         body: SafeArea(
           minimum: EdgeInsets.all(1),
           child: CallingTheAPI(),
@@ -242,7 +242,8 @@ Widget co(String s, String brand) {
                       padding: const EdgeInsets.fromLTRB(12, 10, 12, 30),
                       child: SelectableText(
                         // selectionColor: Colors.blue,
-                        style: const TextStyle(color: Colors.white),
+                        style:
+                            const TextStyle(color: Colors.white, fontSize: 14),
                         s,
                       ),
                     ),
@@ -267,10 +268,12 @@ Widget textfield() {
             child: Card(
               color: const Color.fromARGB(255, 0, 0, 0),
               child: TextField(
+                decoration:
+                    const InputDecoration(contentPadding: EdgeInsets.all(8)),
                 onChanged: (value) {
                   context.read<Variables>().setT(value);
                 },
-                style: const TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white, fontSize: 14),
                 expands: true,
                 maxLines: null,
               ),
@@ -391,8 +394,9 @@ Widget field() {
     return Card(
       color: const Color.fromARGB(255, 0, 0, 0),
       child: TextField(
+        decoration: const InputDecoration(contentPadding: EdgeInsets.all(8)),
         onChanged: (value) => context.read<Variables>().text = value,
-        style: const TextStyle(color: Colors.white),
+        style: const TextStyle(color: Colors.white, fontSize: 13),
         expands: true,
         maxLines: null,
       ),
