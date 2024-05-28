@@ -90,8 +90,8 @@ class Variables with ChangeNotifier {
   String gs = '';
   String ys = '';
   String ds = '';
-  bool gb = false;
-  bool yb = true;
+  bool gb = true;
+  bool yb = false;
   bool db = true;
   bool fb = true;
   bool tb = true;
@@ -266,6 +266,9 @@ Widget textfield() {
         children: [
           Expanded(
             child: Card(
+              shape: BeveledRectangleBorder(
+                borderRadius: BorderRadius.circular(3),
+              ),
               color: const Color.fromARGB(255, 0, 0, 0),
               child: TextField(
                 decoration:
@@ -292,7 +295,7 @@ Widget bottomshit(String s, String brand) {
   return Padding(
     padding: const EdgeInsets.only(top: 0, bottom: 2),
     child: Card(
-      color: const Color.fromARGB(255, 211, 243, 175),
+      color: const Color.fromARGB(255, 103, 170, 159),
       shape: BeveledRectangleBorder(
         borderRadius: BorderRadius.circular(3),
       ),
@@ -336,29 +339,44 @@ Widget colu() {
 
 Widget bottom() {
   return Builder(builder: (context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        IconButton(
-            onPressed: () {
-              showBottomSheet(
-                shape: BeveledRectangleBorder(
-                    borderRadius: BorderRadius.circular(2)),
-                context: context,
-                builder: (context) {
-                  return SizedBox(
-                    child: controll(),
+    return Padding(
+      padding: const EdgeInsets.only(top: 0, bottom: 2),
+      child: Card(
+        shape: BeveledRectangleBorder(
+          borderRadius: BorderRadius.circular(3),
+        ),
+        color: const Color.fromARGB(255, 102, 214, 121),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            IconButton(
+                onPressed: () {
+                  showBottomSheet(
+                    shape: BeveledRectangleBorder(
+                        borderRadius: BorderRadius.circular(2)),
+                    context: context,
+                    builder: (context) {
+                      return SizedBox(
+                        child: controll(),
+                      );
+                    },
                   );
                 },
-              );
-            },
-            icon: const Icon(Icons.arrow_drop_up_rounded)),
-        IconButton(
-            onPressed: () {
-              context.read<Variables>().settextengine();
-            },
-            icon: const Icon(Icons.check))
-      ],
+                icon: const Icon(
+                  Icons.arrow_drop_up_rounded,
+                  size: 27,
+                )),
+            IconButton(
+                onPressed: () {
+                  context.read<Variables>().settextengine();
+                },
+                icon: const Icon(
+                  Icons.check,
+                  size: 27,
+                ))
+          ],
+        ),
+      ),
     );
   });
 }
@@ -392,6 +410,9 @@ Widget controll() {
 Widget field() {
   return Builder(builder: (context) {
     return Card(
+      shape: BeveledRectangleBorder(
+        borderRadius: BorderRadius.circular(3),
+      ),
       color: const Color.fromARGB(255, 0, 0, 0),
       child: TextField(
         decoration: const InputDecoration(contentPadding: EdgeInsets.all(8)),
