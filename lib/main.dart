@@ -91,8 +91,8 @@ class Variables with ChangeNotifier {
   String ys = '';
   String ds = '';
   bool gb = true;
-  bool yb = false;
-  bool db = true;
+  bool yb = true;
+  bool db = false;
   bool fb = true;
   bool tb = true;
 
@@ -124,14 +124,16 @@ class Variables with ChangeNotifier {
       ys = s.replaceAll('\\n', '\n');
     } else {
       String s = await pos(uri, body);
-      ds = s.replaceAll('\\n', '\n');
+      ds = s.replaceAll('\n\n', '');
+      // ds = s.replaceAll('\\n', '\n');
+      // ds = s.replaceAll('.', '. \n\n');
     }
     notifyListeners();
   }
 
   Future pos(String uri, String body) async {
     final g = await http.post(Uri.parse(uri),
-        headers: header, body: json.encode({"toBeTranslated": body.trim()}));
+        headers: header, body: json.encode({"toBeTranslated": body}));
     return g.body;
   }
 
@@ -159,9 +161,8 @@ class Variables with ChangeNotifier {
         text,
         'y');
     setFieldValue(
-        'https://fastapi-example-sfc6.onrender.com/res/d'
-        // 'http://127.0.0.1:8000/res/d'
-        ,
+        // 'https://fastapi-example-sfc6.onrender.com/res/d',
+        'http://127.0.0.1:8000/res/d',
         text,
         'd');
   }
