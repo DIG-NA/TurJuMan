@@ -30,7 +30,8 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(
         scrollbarTheme: const ScrollbarThemeData(
-            thumbColor: WidgetStatePropertyAll(Color.fromARGB(255, 48, 0, 0))),
+            thumbColor:
+                WidgetStatePropertyAll(Color.fromARGB(255, 144, 75, 64))),
         colorScheme: ColorScheme.fromSeed(
           seedColor: const Color.fromARGB(255, 48, 0, 0),
         ),
@@ -143,28 +144,33 @@ class Variables with ChangeNotifier {
     } else if (char == 'y') {
       String s = await pos(uri, body);
       // s = s.trim();
-      ys = s.replaceAll('\\n', '\n');
+      s = s.replaceAll('\\n', '\n');
+      s = s.replaceAll('\\', '');
+      ys = s;
     } else {
       String s = await pos(uri, body);
       s = s.toString();
       s = s.replaceAll('\\n', '\n');
+      s = s.replaceAll('\\', '');
       ds = s;
     }
     notifyListeners();
   }
 
   Future pos(String uri, String body) async {
+    var client = http.Client();
     try {
-      final r = await http.post(Uri.parse(uri),
+      final r = await client.post(Uri.parse(uri),
           headers: header, body: json.encode({"toBeTranslated": body}));
       String rs = utf8.decode(r.bodyBytes);
 
       if (rs.contains('Internal Server Error')) {
-        return 'Too many requests, try again after 2 minutes';
+        return 'Too many requests, try again after a minute';
       } else {
         return rs;
       }
     } catch (e) {
+      client.close();
       return "make sure you're connected to the internet";
     }
   }
