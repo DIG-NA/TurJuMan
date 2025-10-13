@@ -1,5 +1,6 @@
 # TurJuMan
 
-A new Flutter project.
 
-![turjuman](https://github.com/DIG-NA/TurJuMan/assets/162705072/d00e563d-7003-4efe-9d65-78034fe99aa0)
+
+https://github.com/DIG-NA/TurJuMan/assets/162705072/b0acea50-c761-4fc5-83d5-57acb9785050
+
