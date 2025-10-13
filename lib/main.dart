@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
+import 'deeplapi.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -66,8 +67,8 @@ wakeTheApiFun({BuildContext? context}) async {
   try {
     var v = await http.get(
       Uri.parse(
-        'https://fastapi-example-sfc6.onrender.com/res/test',
-      ),
+          // 'https://fastapi-example-sfc6.onrender.com/res/test',
+          'http://127.0.0.1:8000/res/test'),
     );
     return v.body;
   } catch (e) {
@@ -95,7 +96,7 @@ class _CallingTheAPIState extends State<CallingTheAPI> {
   }
 }
 
-class Variables with ChangeNotifier {
+class Variables extends ChangeNotifier {
   Color color = Colors.black;
   Color revcol = Colors.white;
 
@@ -135,24 +136,57 @@ class Variables with ChangeNotifier {
     notifyListeners();
   }
 
+  String sumstring = '';
+
+  // sumstring = sumlist.join();
+
+  // Future<String>
+  l(String s) async {
+    s = s.replaceAll('\n', '\\');
+    // s = s.replaceAll('\n', '\\');
+    // s = s.trim();
+
+    List<String> g = s.split('，');
+    List<String> sumlist = [];
+
+    for (var i = 0; i < g.length; i++) {
+      if (g[i].trim().isEmpty) continue;
+
+      String? f = await sendRequest(g[i]);
+      sumlist.add(f);
+      sumstring = sumlist.join();
+      sumstring = sumstring.replaceAll('\\', '\n');
+      notifyListeners();
+    }
+
+    // print(sumstring);
+    // return sumstring;
+  }
+
   setFieldValue(String uri, String body, String char) async {
     if (char == 'g') {
       String s = await pos(uri, body);
       s = s.replaceAll('\\n', '\n');
+      s = s.replaceAll(RegExp(r'\nt'), '\n');
       s = s.replaceAll(r'\', '');
       gs = s;
     } else if (char == 'y') {
       String s = await pos(uri, body);
       // s = s.trim();
       s = s.replaceAll('\\n', '\n');
+      s = s.replaceAll(RegExp(r'^\s*t\s*$', multiLine: true), '');
       s = s.replaceAll('\\', '');
       ys = s;
     } else {
-      String s = await pos(uri, body);
+      // String s = await pos(uri, body);
+      String s = await l(body);
       s = s.toString();
-      s = s.replaceAll('\\n', '\n');
-      s = s.replaceAll('\\', '');
-      ds = s;
+      // s = s.replaceAll('\\n', '\n');
+      // s = s.replaceAll(RegExp(r'^\s*t\s*$', multiLine: true), '');
+      // s = s.replaceAll(RegExp(r'\nt'), '\n');
+
+      // s = s.replaceAll('\\', '\n');
+      // ds = s;
     }
     notifyListeners();
   }
@@ -178,20 +212,18 @@ class Variables with ChangeNotifier {
   String text = '';
   settextengine() {
     setFieldValue(
-        'https://fastapi-example-sfc6.onrender.com/res/g'
-        // 'http://127.0.0.1:8000/res/g'
-        ,
+        // 'https://fastapi-example-sfc6.onrender.com/res/g'
+        'http://127.0.0.1:8000/res/g',
         text,
         'g');
     setFieldValue(
-        'https://fastapi-example-sfc6.onrender.com/res/y'
-        // 'http://127.0.0.1:8000/res/y'
-        ,
+        // 'https://fastapi-example-sfc6.onrender.com/res/y'
+        'http://127.0.0.1:8000/res/y',
         text,
         'y');
     setFieldValue(
-        'https://fastapi-example-sfc6.onrender.com/res/d',
-        // 'http://127.0.0.1:8000/res/d',
+        // 'https://fastapi-example-sfc6.onrender.com/res/d',
+        'http://127.0.0.1:8000/res/dd',
         text,
         'd');
   }
@@ -267,7 +299,7 @@ Widget ro() {
         Visibility(
           visible: c.db,
           child: Expanded(
-            child: co(c.ds, 'D'),
+            child: co(c.sumstring, 'D'),
           ),
         ),
         Visibility(visible: c.yb, child: dots()),
@@ -336,6 +368,31 @@ Widget co(String s, String brand) {
         //     [DeviceOrientation.landscapeRight, DeviceOrientation.landscapeLeft],
         //   );
         // },
+        child: Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(12, 10, 12, 30),
+                  child: SelectableText(
+                    style: Theme.of(context).textTheme.bodyMedium,
+                    s,
+                  ),
+                ), // const TextStyle( fontSize: 14),
+              ),
+            ),
+            bottomshit(s, brand),
+          ],
+        ),
+      );
+    },
+  );
+}
+
+Widget futureco(String s, String brand) {
+  return Builder(
+    builder: (context) {
+      return GestureDetector(
         child: Column(
           children: [
             Expanded(
