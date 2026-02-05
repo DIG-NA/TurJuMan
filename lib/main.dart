@@ -178,8 +178,8 @@ class Variables extends ChangeNotifier {
       s = s.replaceAll('\\', '');
       ys = s;
     } else {
-      // String s = await pos(uri, body);
-      String s = await l(body);
+      String s = await pos(uri, body);
+      // String s = await l(body);
       s = s.toString();
       // s = s.replaceAll('\\n', '\n');
       // s = s.replaceAll(RegExp(r'^\s*t\s*$', multiLine: true), '');
@@ -212,18 +212,21 @@ class Variables extends ChangeNotifier {
   String text = '';
   settextengine() {
     setFieldValue(
-        // 'https://fastapi-example-sfc6.onrender.com/res/g'
-        'http://127.0.0.1:8000/res/g',
+        'https://fastapi-example-sfc6.onrender.com/res/g'
+        // 'http://127.0.0.1:8000/res/g'
+        ,
         text,
         'g');
     setFieldValue(
-        // 'https://fastapi-example-sfc6.onrender.com/res/y'
-        'http://127.0.0.1:8000/res/y',
+        'https://fastapi-example-sfc6.onrender.com/res/y'
+        // 'http://127.0.0.1:8000/res/y'
+        ,
         text,
         'y');
     setFieldValue(
-        // 'https://fastapi-example-sfc6.onrender.com/res/d',
-        'http://127.0.0.1:8000/res/dd',
+        'https://fastapi-example-sfc6.onrender.com/res/d'
+        // 'http://127.0.0.1:8000/res/dd'
+        ,
         text,
         'd');
   }
